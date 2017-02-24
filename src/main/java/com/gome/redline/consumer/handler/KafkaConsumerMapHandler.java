@@ -8,7 +8,14 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 /**
  * Created by Lanxiaowei at 2017/2/23 16:07
  */
-public class KafkaConsumerMapHandler implements IKafkaConsumerHandler<Map<String,Object>> {
+public class KafkaConsumerMapHandler extends AbstractKafkaConsumerHandler<Map<String,Object>> {
+    public KafkaConsumerMapHandler() {
+        super();
+    }
+
+    public KafkaConsumerMapHandler(String charset) {
+        super(charset);
+    }
 
     public void handle(ConsumerRecord<String, byte[]> record, IKafkaMessageDecoder<Map<String, Object>> decoder) {
         //将Kafka Message解码为Map<String,Object>

@@ -8,7 +8,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecords;
  * Created by Lanxiaowei at 2017/2/23 15:45
  * Kafka Consumer Interface
  */
-public interface IKafkaConsumer extends Runnable{
+public interface IKafkaConsumer<T> extends Runnable{
     /**
      * subscribe topics
      * @param topics

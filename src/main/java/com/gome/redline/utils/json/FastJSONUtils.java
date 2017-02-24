@@ -72,6 +72,15 @@ public class FastJSONUtils {
     }
 
     /**
+     * 将javabean转化为String字符串
+     * @param t
+     * @return
+     */
+    public static <T>String beanToString(T t) {
+        return JSON.toJSONString(t);
+    }
+
+    /**
      * 将string转化为序列化的json字符串
      * @param text
      * @return

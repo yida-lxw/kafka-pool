@@ -20,6 +20,10 @@ public interface IKafkaProducer<T> {
      */
     void send(T msg, IKafkaMessageEncoder<T> encoder);
 
+    void send(T msg,String charset);
+
+    void send(T msg);
+
     /**
      * The Producer is not really closed but sent back into pool.
      */

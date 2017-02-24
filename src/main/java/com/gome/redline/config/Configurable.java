@@ -10,4 +10,10 @@ public interface Configurable {
      * @return
      */
     public KafkaConfig initConfig();
+
+    /**
+     * 获取Kafka配置对象
+     * @return
+     */
+    KafkaConfig getConfig();
 }

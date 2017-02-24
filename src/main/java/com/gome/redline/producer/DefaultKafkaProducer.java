@@ -1,6 +1,8 @@
 package com.gome.redline.producer;
 
-import com.gome.redline.pool.KafkaProducerPool;
+import com.gome.redline.encoder.IKafkaMessageEncoder;
+import com.gome.redline.pool.IKafkaProducerPool;
+import com.gome.redline.utils.Constant;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -11,13 +13,20 @@ import org.apache.kafka.clients.producer.ProducerRecord;
  */
 public abstract class DefaultKafkaProducer<T> implements IKafkaProducer<T> {
     protected Producer<String, byte[]> producer;
-    protected KafkaProducerPool pool;
+    protected IKafkaProducerPool pool;
 
-    public DefaultKafkaProducer(KafkaProducerPool pool) {
+    public DefaultKafkaProducer(IKafkaProducerPool pool) {
         super();
         this.producer = new KafkaProducer<String, byte[]>(pool.getConfig().getKafkaConfig());
         this.pool = pool;
     }
+
+    /**
+     * 发送Kafka消息，消息类型为字符串
+     * @param msg
+     * @param charset
+     */
+    public abstract void send(T msg,String charset);
 
     /**
      * 发送Kafka消息，消息类型为字节数组
@@ -26,6 +35,24 @@ public abstract class DefaultKafkaProducer<T> implements IKafkaProducer<T> {
     public void send(byte[] msg) {
         ProducerRecord<String, byte[]> data = new ProducerRecord<String, byte[]>(this.pool.getTopic(), msg);
         this.producer.send(data);
+    }
+
+    /**
+     * 发送Kafka消息，消息类型为字符串
+     * @param msg
+     */
+    public void send(T msg) {
+        send(msg, Constant.DEFAULT_CHARSET);
+    }
+
+    /**
+     * 发送Kafka消息，消息类型为泛型T
+     * @param msg
+     * @param encoder
+     */
+    public void send(T msg, IKafkaMessageEncoder<T> encoder) {
+        byte[] encoded = encoder.encode(msg);
+        send(encoded);
     }
 
     /**

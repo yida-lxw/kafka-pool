@@ -1,7 +1,7 @@
 package com.gome.redline.producer;
 
-import com.gome.redline.encoder.IKafkaMessageEncoder;
-import com.gome.redline.pool.KafkaProducerPool;
+import com.gome.redline.encoder.KafkaMessageMapEncoder;
+import com.gome.redline.pool.IKafkaProducerPool;
 import java.util.Map;
 
 /**
@@ -9,17 +9,16 @@ import java.util.Map;
  * Kafka Producer Implement,it only can send Map<String,Object> kafka message.
  */
 public class KafkaMapProducer extends DefaultKafkaProducer<Map<String,Object>> {
-    public KafkaMapProducer(KafkaProducerPool pool) {
+    public KafkaMapProducer(IKafkaProducerPool pool) {
         super(pool);
     }
 
     /**
      * 发送Kafka消息，消息类型为Map<String, Object>
      * @param msg
-     * @param encoder
+     * @param charset
      */
-    public void send(Map<String, Object> msg, IKafkaMessageEncoder<Map<String, Object>> encoder) {
-        byte[] encoded = encoder.encode(msg);
-        send(encoded);
+    public void send(Map<String,Object> msg,String charset) {
+        send(msg,new KafkaMessageMapEncoder(charset));
     }
 }

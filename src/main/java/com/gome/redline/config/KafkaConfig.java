@@ -46,6 +46,8 @@ public class KafkaConfig {
 
     private KafkaConfig () {
         this.initialize();
+        //Validate the Kafka configuration after config have initialized.
+        this.validate();
     }
 
     private static class SingletonHolder {
@@ -93,12 +95,12 @@ public class KafkaConfig {
      * 验证Kafka配置信息
      * @throws Exception
      */
-    public void validate() throws Exception {
+    public void validate() {
         if (null == kafkaServer || "".equals(kafkaServer)) {
-            throw new Exception("KafkaServer is not set in the KafkaConfig.");
+            throw new KafkaConfigInvalidException("KafkaServer is not set in the KafkaConfig.");
         }
         if (null == zkHosts || "".equals(zkHosts)) {
-            throw new Exception("Zookeeper Host is not set in the KafkaConfig.");
+            throw new KafkaConfigInvalidException("Zookeeper Host is not set in the KafkaConfig.");
         }
     }
 

@@ -12,8 +12,6 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static sun.security.krb5.Confounder.intValue;
-
 /**
  * Created by Lanxiaowei at 2017/2/22 20:00
  * DynamicBroker读取工具类
